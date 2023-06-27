@@ -18,5 +18,14 @@ class Article
     public function formatPublishDate($format = 'DD-MM-YYYY')
     {
         // TODO: return the date in the required format
+        $date = $this->publishDate;
+
+        $format = str_replace('DD', 'd', $format);
+        $format = str_replace('MM', 'm', $format);
+        $format = str_replace('YYYY', 'Y', $format);
+
+        $dateFormat = date($format, strtotime($date));
+
+        return $dateFormat;
     }
 }

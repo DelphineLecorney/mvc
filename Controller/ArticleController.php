@@ -17,6 +17,12 @@ class ArticleController
     private function getArticles()
     {
         // TODO: prepare the database connection
+        try {
+            $bdd = new PDO('mysql:host=localhost;dbname=mvc;charset=utf8','root');  
+        }
+        catch(Exception $e) {
+            die('Erreur : '.$e->getMessage());
+        }
         // Note: you might want to use a re-usable databaseManager class - the choice is yours
         // TODO: fetch all articles as $rawArticles (as a simple array)
         $rawArticles = [];
