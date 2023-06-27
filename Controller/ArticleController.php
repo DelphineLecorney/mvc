@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 class ArticleController
 {
@@ -18,14 +18,13 @@ class ArticleController
     {
         // Prepare the database connection
         try {
-            $bdd = new PDO('mysql:host=localhost;dbname=mvc;charset=utf8','root');  
-        }
-        catch(Exception $e) {
+            $bdd = new PDO('mysql:host=localhost;dbname=mvc;charset=utf8', 'root');
+        } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }
 
         $request = $bdd->query('SELECT * FROM articles');
-        $rawArticles = $request->fetchAll(PDO::FETCH_ASSOC);
+        $rawArticles = $request->fetchAll();
 
         // Note: you might want to use a re-usable databaseManager class - the choice is yours
         // TODO: fetch all articles as $rawArticles (as a simple array)
@@ -36,12 +35,30 @@ class ArticleController
             $articles[] = new Article($rawArticle['title'], $rawArticle['description'], $rawArticle['publish_date']);
         }
 
-        return $rawArticles;
+        return $articles;
     }
 
     public function show()
     {
         // TODO: this can be used for a detail page
         $articleId = $_GET['id'];
+
+        try {
+            $bdd = new PDO('mysql:host=localhost;dbname=mvc;charset=utf8', 'root');
+        } catch(Exception $e) {
+            die('Erreur : '.$e->getMessage());
+        }
+        $statement = $bdd->prepare("SELECT * FROM articles WHERE `id` = :id");
+        $statement->bindParam(':id', $articleId);
+        $statement->execute();
+
+        $dataArticle = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if(!$dataArticle) {
+            die("The article wasn't found");
+        }
+
+        $article = new Article($dataArticle['title'], $dataArticle['description'], $dataArticle['publish_date']);
+        require 'View/articles/show.php';
     }
 }
