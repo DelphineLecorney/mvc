@@ -1,6 +1,8 @@
 <?php require 'View/includes/header.php'?>
 
-<?php // Use any data loaded in the controller here?>
+<?php // Use any data loaded in the controller here
+
+?>
 
 <section>
     <h1><?= $article->title ?></h1>
