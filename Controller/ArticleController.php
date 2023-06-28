@@ -37,6 +37,12 @@ class ArticleController
         return $articles;
     }
 
+    public function getUrl()
+    {
+        $url = 'http://localhost/Becode/mvc/index.php?page=articles-show&id=' . $this->id;
+        return $url;
+    }
+
     public function show()
     {
         $articleId = $_GET['id'];
