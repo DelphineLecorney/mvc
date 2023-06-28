@@ -2,8 +2,17 @@
 
 declare(strict_types=1);
 
+require_once 'Model/connect.php';
+
 class ArticleController
 {
+    private $bdd;
+
+    public function __construct()
+    {
+        $this->bdd = getConnectBdd();
+    }
+
     public function index()
     {
         // Load all required data
@@ -16,17 +25,8 @@ class ArticleController
     // Note: this function can also be used in a repository - the choice is yours
     private function getArticles()
     {
-        try {
-            $bdd = new PDO('mysql:host=localhost;dbname=mvc;charset=utf8', 'root');
-        } catch(Exception $e) {
-            die('Erreur : '.$e->getMessage());
-        }
-
-        $request = $bdd->query('SELECT * FROM articles');
+        $request = $this->bdd->query('SELECT * FROM articles');
         $rawArticles = $request->fetchAll();
-
-        // Note: you might want to use a re-usable databaseManager class - the choice is yours
-        // TODO: fetch all articles as $rawArticles (as a simple array)
 
         $articles = [];
         foreach ($rawArticles as $rawArticle) {
@@ -39,15 +39,9 @@ class ArticleController
 
     public function show()
     {
-        // TODO: this can be used for a detail page
         $articleId = $_GET['id'];
 
-        try {
-            $bdd = new PDO('mysql:host=localhost;dbname=mvc;charset=utf8', 'root');
-        } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
-        }
-        $statement = $bdd->prepare('SELECT id, title, description, publish_date FROM articles WHERE id = :id');
+        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date FROM articles WHERE id = :id');
         $statement->bindParam(':id', $articleId);
         $statement->execute();
 
@@ -58,6 +52,26 @@ class ArticleController
         }
 
         $article = new Article((int)$dataArticle['id'], $dataArticle['title'], $dataArticle['description'], $dataArticle['publish_date']);
+
+        $previousArticle = $this->getPreviousArticle();
+
+        $nextArticle = $this->getNextArticle();
+
         require 'View/articles/show.php';
     }
+
+    public function retrieveCurrentArticle()
+    {
+        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date FROM articles WHERE id = :id');
+        $statement->bindParam(':id', $articleId);
+        $statement->execute();
+
+        $dataArticle = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (!$dataArticle) {
+            return null;
+        }
+        return new Article((int)$dataArticle['id'], $dataArticle['title'], $dataArticle['description'], $dataArticle['publish_date']);
+    }
+
 }
