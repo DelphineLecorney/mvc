@@ -36,7 +36,7 @@ class ArticleController
                 $rawArticle['title'],
                 $rawArticle['description'],
                 $rawArticle['publish_date'],
-                $rawArticle['image_url']
+                $rawArticle['image_url'] ?? ''
             );
 
         }
@@ -71,18 +71,19 @@ class ArticleController
             $dataArticle['title'],
             $dataArticle['description'],
             $dataArticle['publish_date'],
-            $dataArticle['image_url']
+            $dataArticle['image_url'] ?? ''
         );
 
         $previousArticle = $this->getPreviousArticle();
 
-        $nextArticle = $this->getNextArticle();
+        $nextArticle = $this->getNextArticle();  
 
         require 'View/articles/show.php';
     }
 
     public function retrieveCurrentArticle()
     {
+        $articleId = $_GET['id'];
         $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url 
                                             FROM articles 
                                             WHERE id = :id');
@@ -99,7 +100,7 @@ class ArticleController
             $dataArticle['title'],
             $dataArticle['description'],
             $dataArticle['publish_date'],
-            $dataArticle['image_url']
+            $dataArticle['image_url'] ?? ''
         );
     }
 
@@ -126,7 +127,7 @@ class ArticleController
             $dataArticle['title'],
             $dataArticle['description'],
             $dataArticle['publish_date'],
-            $dataArticle['image_url']
+            $dataArticle['image_url'] ?? ''
         );
     }
 
@@ -153,7 +154,7 @@ class ArticleController
             $dataArticle['title'],
             $dataArticle['description'],
             $dataArticle['publish_date'],
-            $dataArticle['image_url']
+            $dataArticle['image_url'] ?? ''
         );
     }
 

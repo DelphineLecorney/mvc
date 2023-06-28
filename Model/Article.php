@@ -8,15 +8,15 @@ class Article
     public string $title;
     public ?string $description;
     public ?string $publishDate;
-    public blob $imageUrl;
+    public string $imageUrl;
 
-    public function __construct(int $id, string $title, ?string $description, ?string $publishDate)
+    public function __construct(int $id, string $title, ?string $description, ?string $publishDate, string $imageUrl)
     {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
         $this->publishDate = $publishDate;
-        $this->imageUrl = $imageUrl;
+        $this->imageUrl = $imageUrl ?? '';
     }
 
     public function formatPublishDate($format = 'D-M-Y')
@@ -30,4 +30,23 @@ class Article
 
         return $dateFormat;
     }
+
+    public function getImage()
+{
+    $statement = $this->bdd->prepare('SELECT image_url 
+                                      FROM articles 
+                                      WHERE id = :id');
+    $statement->bindParam(':id', $this->id);
+    $statement->execute();
+
+    $dataArticle = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if (!$dataArticle || empty($dataArticle['image_url'])) {
+        die("The image wasn't found");
+    }
+
+    return $dataArticle['image_url'];
+}
+
+
 }

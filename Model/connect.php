@@ -9,3 +9,4 @@ function getConnectBdd()
         die('Erreur : ' . $e->getMessage());
     }
 }
+?>
