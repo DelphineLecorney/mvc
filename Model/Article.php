@@ -8,6 +8,7 @@ class Article
     public string $title;
     public ?string $description;
     public ?string $publishDate;
+    public blob $imageUrl;
 
     public function __construct(int $id, string $title, ?string $description, ?string $publishDate)
     {
@@ -15,6 +16,7 @@ class Article
         $this->title = $title;
         $this->description = $description;
         $this->publishDate = $publishDate;
+        $this->imageUrl = $imageUrl;
     }
 
     public function formatPublishDate($format = 'D-M-Y')
