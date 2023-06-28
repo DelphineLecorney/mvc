@@ -1,0 +1,29 @@
+@import "./reset.css";
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+header{
+    background-color: rgb(190, 188, 185);
+    font-size: 30px;
+    padding: 20px;
+}
+h1 {
+    font-size: 20px;
+    padding: 20px;
+}
+p {
+    padding: 20px;
+}
+footer {
+    background-color: rgb(190, 188, 185);
+    flex-shrink: 0;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

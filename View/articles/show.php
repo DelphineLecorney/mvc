@@ -5,18 +5,18 @@
 ?>
 
 <section>
-    <h1><?= $article->getAuthor() ?></h1>
-    <p><?= $article->formatPublishDate() ?></p>
+    <h1><?= $article->getAuthor() ?></h1><br>
+    <p><?= $article->formatPublishDate() ?></p><br>
     <p><?= $article->description ?></p>
 
     
-    <?php if ($article->imageUrl !== null): ?>
-        <img src="<?= $article->imageUrl ?>" alt="Image" width="100" height="100">
+    <?php if ($article->imageUrl !== null): ?><br>
+        <img src="<?= $article->imageUrl ?>" alt="Image" width="200" height="200">
     <?php else: ?>
         <p>Image not available</p>
     <?php endif; ?>
 
-    <div>
+    <div><br>
         <?php if ($previousArticle): ?>
             <a href="index.php?page=articles-show&id=<?= $previousArticle->id ?>">Previous article</a>
         <?php endif; ?>

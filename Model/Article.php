@@ -56,7 +56,7 @@ class Article
                 die("There's no author");
             }else
             {
-                return $this->title.'By - '.$this->author;
+                return $this->title.' By - '.$this->author;
             }
         }
 }
