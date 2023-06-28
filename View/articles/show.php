@@ -5,9 +5,10 @@
 ?>
 
 <section>
-    <h1><?= $article->title ?></h1>
+    <h1><?= $article->getAuthor() ?></h1>
     <p><?= $article->formatPublishDate() ?></p>
     <p><?= $article->description ?></p>
+
     
     <?php if ($article->imageUrl !== null): ?>
         <img src="<?= $article->imageUrl ?>" alt="Image" width="100" height="100">

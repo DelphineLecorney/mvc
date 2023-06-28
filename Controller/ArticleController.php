@@ -36,7 +36,8 @@ class ArticleController
                 $rawArticle['title'],
                 $rawArticle['description'],
                 $rawArticle['publish_date'],
-                $rawArticle['image_url'] ?? ''
+                $rawArticle['image_url'] ?? '',
+                $rawArticle['author']
             );
 
         }
@@ -54,7 +55,7 @@ class ArticleController
     {
         $articleId = $_GET['id'];
 
-        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url 
+        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author 
                                             FROM articles 
                                             WHERE id = :id');
         $statement->bindParam(':id', $articleId);
@@ -71,12 +72,13 @@ class ArticleController
             $dataArticle['title'],
             $dataArticle['description'],
             $dataArticle['publish_date'],
-            $dataArticle['image_url'] ?? ''
+            $dataArticle['image_url'] ?? '',
+            $dataArticle['author']
         );
 
         $previousArticle = $this->getPreviousArticle();
 
-        $nextArticle = $this->getNextArticle();  
+        $nextArticle = $this->getNextArticle();
 
         require 'View/articles/show.php';
     }
@@ -84,7 +86,7 @@ class ArticleController
     public function retrieveCurrentArticle()
     {
         $articleId = $_GET['id'];
-        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url 
+        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author
                                             FROM articles 
                                             WHERE id = :id');
         $statement->bindParam(':id', $articleId);
@@ -100,7 +102,8 @@ class ArticleController
             $dataArticle['title'],
             $dataArticle['description'],
             $dataArticle['publish_date'],
-            $dataArticle['image_url'] ?? ''
+            $dataArticle['image_url'] ?? '',
+            $dataArticle['author']
         );
     }
 
@@ -108,7 +111,7 @@ class ArticleController
     {
         $currentArticleId = $_GET['id'];
 
-        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url 
+        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author 
                                             FROM articles 
                                             WHERE id < :id 
                                             ORDER BY id 
@@ -127,7 +130,8 @@ class ArticleController
             $dataArticle['title'],
             $dataArticle['description'],
             $dataArticle['publish_date'],
-            $dataArticle['image_url'] ?? ''
+            $dataArticle['image_url'] ?? '',
+            $dataArticle['author']
         );
     }
 
@@ -135,7 +139,7 @@ class ArticleController
     {
         $currentArticleId = $_GET['id'];
 
-        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url
+        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author
                                             FROM articles 
                                             WHERE id > :id 
                                             ORDER BY id 
@@ -154,7 +158,8 @@ class ArticleController
             $dataArticle['title'],
             $dataArticle['description'],
             $dataArticle['publish_date'],
-            $dataArticle['image_url'] ?? ''
+            $dataArticle['image_url'] ?? '',
+            $dataArticle['author']
         );
     }
 
