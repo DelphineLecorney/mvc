@@ -31,7 +31,7 @@ class ArticleController
         $articles = [];
         foreach ($rawArticles as $rawArticle) {
             // We are converting an article from a "dumb" array to a much more flexible class
-            $articles[] = new Article((int)$rawArticle['id'], $rawArticle['title'], $rawArticle['description'], $rawArticle['publish_date']);
+            $articles[] = new Article($rawArticle['id'], $rawArticle['title'], $rawArticle['description'], $rawArticle['publish_date']);
         }
 
         return $articles;
@@ -51,7 +51,7 @@ class ArticleController
             die("The article wasn't found");
         }
 
-        $article = new Article((int)$dataArticle['id'], $dataArticle['title'], $dataArticle['description'], $dataArticle['publish_date']);
+        $article = new Article($dataArticle['id'], $dataArticle['title'], $dataArticle['description'], $dataArticle['publish_date']);
 
         $previousArticle = $this->getPreviousArticle();
 
@@ -71,7 +71,39 @@ class ArticleController
         if (!$dataArticle) {
             return null;
         }
-        return new Article((int)$dataArticle['id'], $dataArticle['title'], $dataArticle['description'], $dataArticle['publish_date']);
+        return new Article($dataArticle['id'], $dataArticle['title'], $dataArticle['description'], $dataArticle['publish_date']);
+    }
+
+    public function getPreviousArticle()
+    {
+        $currentArticleId = $_GET['id'];
+
+        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date FROM articles WHERE id < :id ORDER BY id DESC LIMIT 1');
+        $statement->bindParam(':id', $currentArticleId);
+        $statement->execute();
+
+        $dataArticle = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (!$dataArticle) {
+            return null;
+        }
+        return new Article($dataArticle['id'], $dataArticle['title'], $dataArticle['description'], $dataArticle['publish_date']);
+    }
+
+    public function getNextArticle()
+    {
+        $currentArticleId = $_GET['id'];
+
+        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date FROM articles WHERE id > :id ORDER BY id ASC LIMIT 1');
+        $statement->bindParam(':id', $currentArticleId);
+        $statement->execute();
+
+        $dataArticle = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (!$dataArticle) {
+            return null;
+        }
+        return new Article($dataArticle['id'], $dataArticle['title'], $dataArticle['description'], $dataArticle['publish_date']);
     }
 
 }
