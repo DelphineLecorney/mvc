@@ -23,8 +23,8 @@
         <?php endif; ?>
         </div>
         <br>
-    <a href="index.php?page=articles-show&id=<?= urlencode($article->getAuthor()) ?>">More articles by the same author</a>
-            
+
+<a href="index.php?page=articles-show&id=<?= urlencode($article->getUrl()) ?>">More articles by the same author</a>
 
 </section>
 <?php require 'View/includes/footer.php'?>

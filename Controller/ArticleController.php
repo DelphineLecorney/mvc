@@ -45,13 +45,6 @@ class ArticleController
         return $articles;
     }
 
-    public function getUrl($articleId)
-    {
-        $url = 'index.php?page=articles-show&id=' . $articleId;
-        return $url;
-    }
-
-
     public function show()
     {
         $articleId = $_GET['id'];
@@ -83,7 +76,6 @@ class ArticleController
 
         require 'View/articles/show.php';
     }
-
 
     public function retrieveCurrentArticle()
     {

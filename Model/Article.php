@@ -63,31 +63,9 @@ class Article
         }
     }
 
-    public static function getArticlesByAuthor($author)
+    public function getUrl()
     {
-        $bdd = getConnectBdd();
-        
-        $statement = $bdd->prepare('SELECT id, title, description, publish_date, image_url, author 
-                                      FROM articles 
-                                      WHERE author = :author');
-        $statement->bindParam(':author', $author);
-        $statement->execute();
-
-        $rawArticles = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $articles = [];
-
-        foreach ($rawArticles as $rawArticle) {
-            $articles[] = new Article(
-                $rawArticle['id'],
-                $rawArticle['title'],
-                $rawArticle['description'],
-                $rawArticle['publish_date'],
-                $rawArticle['image_url'] ?? '',
-                $rawArticle['author']
-            );
-        }
-
-        return $articles;
+        $url = 'index.php?page=articles-show&id=';
+        return $url;
     }
-
 }
