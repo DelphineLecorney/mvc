@@ -32,6 +32,11 @@ class Article
         return $dateFormat;
     }
 
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
     public function getImage()
     {
         $statement = $this->bdd->prepare('SELECT image_url 
@@ -49,14 +54,40 @@ class Article
         return $dataArticle['image_url'];
     }
 
-        public function getAuthor()
-        {
-            if(!$this->author)
-            {
-                die("There's no author");
-            }else
-            {
-                return $this->title.' By - '.$this->author;
-            }
+    public function getAuthor()
+    {
+        if(!$this->author) {
+            die("There's no author");
+        } else {
+            return $this->title.' By - '.$this->author;
         }
+    }
+
+    public static function getArticlesByAuthor($author)
+    {
+        $bdd = getConnectBdd();
+        
+        $statement = $bdd->prepare('SELECT id, title, description, publish_date, image_url, author 
+                                      FROM articles 
+                                      WHERE author = :author');
+        $statement->bindParam(':author', $author);
+        $statement->execute();
+
+        $rawArticles = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $articles = [];
+
+        foreach ($rawArticles as $rawArticle) {
+            $articles[] = new Article(
+                $rawArticle['id'],
+                $rawArticle['title'],
+                $rawArticle['description'],
+                $rawArticle['publish_date'],
+                $rawArticle['image_url'] ?? '',
+                $rawArticle['author']
+            );
+        }
+
+        return $articles;
+    }
+
 }

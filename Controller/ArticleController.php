@@ -45,19 +45,20 @@ class ArticleController
         return $articles;
     }
 
-    public function getUrl()
+    public function getUrl($articleId)
     {
-        $url = 'http://localhost/Becode/mvc/index.php?page=articles-show&id=' . $this->id;
+        $url = 'index.php?page=articles-show&id=' . $articleId;
         return $url;
     }
+
 
     public function show()
     {
         $articleId = $_GET['id'];
 
         $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author 
-                                            FROM articles 
-                                            WHERE id = :id');
+                                      FROM articles 
+                                      WHERE id = :id');
         $statement->bindParam(':id', $articleId);
         $statement->execute();
 
@@ -77,11 +78,12 @@ class ArticleController
         );
 
         $previousArticle = $this->getPreviousArticle();
-
         $nextArticle = $this->getNextArticle();
+        $articles = $this->getArticles();   
 
         require 'View/articles/show.php';
     }
+
 
     public function retrieveCurrentArticle()
     {
@@ -162,5 +164,5 @@ class ArticleController
             $dataArticle['author']
         );
     }
-
+    
 }

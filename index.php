@@ -27,7 +27,6 @@ switch ($page) {
         (new ArticleController())->index();
         break;
     case 'articles-show':
-        // TODO: detail page
         (new ArticleController())->show();
         break;
     case 'home':
