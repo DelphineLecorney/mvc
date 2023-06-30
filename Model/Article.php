@@ -71,9 +71,10 @@ class Article
 
     public function getUrl()
     {
-        $url = 'index.php?page=articles-show&id=' . urlencode($this->getId());
+        $url = 'index.php?page=articles-show&id=' . urlencode($this->id);
     
         return $url;
     }
+    
     
 }

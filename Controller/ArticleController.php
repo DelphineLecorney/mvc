@@ -76,8 +76,8 @@ class ArticleController
 
         $previousArticle = $this->getPreviousArticle();
         $nextArticle = $this->getNextArticle();
-        $articles = $this->getArticles(); 
-        $currentArticle = $this->retrieveCurrentArticle($_GET['id']); 
+        $articles = $this->getArticles();
+        $currentArticle = $this->retrieveCurrentArticle($_GET['id']);
 
         require 'View/articles/show.php';
     }
@@ -90,15 +90,15 @@ class ArticleController
             }
             $articleId = $_GET['id'];
         }
-    
+
         $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author
                                           FROM articles 
                                           WHERE id = :id');
         $statement->bindParam(':id', $articleId);
         $statement->execute();
-    
+
         $dataArticle = $statement->fetch(PDO::FETCH_ASSOC);
-    
+
         if (!$dataArticle) {
             return null;
         }
@@ -111,7 +111,7 @@ class ArticleController
             $dataArticle['author']
         );
     }
-    
+
     public function getPreviousArticle()
     {
         $currentArticleId = $_GET['id'];
@@ -167,22 +167,31 @@ class ArticleController
             $dataArticle['author']
         );
     }
+    public function getAuthors()
+    {
+        $statement = $this->bdd->query('SELECT DISTINCT author FROM articles');
+        $authors = $statement->fetchAll(PDO::FETCH_COLUMN);
+
+        return $authors;
+    }
 
     public function articlesByAuthor()
     {
+        $authors = $this->getAuthors();
+
         if (!isset($_GET['author'])) {
             die("Author not provided in the URL");
         }
-    
+
         $author = $_GET['author'];
-    
+
         $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author 
                                           FROM articles 
                                           WHERE author = :author');
         $statement->bindParam(':author', $author);
         $statement->execute();
         $dataArticles = $statement->fetchAll(PDO::FETCH_ASSOC);
-    
+
         $articlesByAuthor = [];
         foreach ($dataArticles as $dataArticle) {
             $articlesByAuthor[] = new Article(
@@ -194,9 +203,9 @@ class ArticleController
                 $dataArticle['author']
             );
         }
-    
+
         require 'View/articles/articles-by-author.php';
     }
-    
-    
+
+
 }
