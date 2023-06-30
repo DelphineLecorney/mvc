@@ -29,6 +29,9 @@ switch ($page) {
     case 'articles-show':
         (new ArticleController())->show();
         break;
+    case 'articles-by-author':
+        (new ArticleController())->articlesByAuthor();
+        break;
     case 'home':
     default:
         (new HomepageController())->index();

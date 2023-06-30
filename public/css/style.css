@@ -10,11 +10,17 @@ header{
     font-size: 15px;
     padding: 15px;
 }
+img {
+    width: 500px;
+    height: 500px;
+    object-fit: contain;   
+}
+  
 h1 {
     font-size: 30px;
     padding: 20px;
 }
-a, p, img {
+a, p{
     font-size: 15px;
     padding: 15px;
 }

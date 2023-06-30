@@ -47,6 +47,10 @@ class ArticleController
 
     public function show()
     {
+        if (!isset($_GET['id'])) {
+            die("Article ID not provided in the URL");
+        }
+
         $articleId = $_GET['id'];
 
         $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author 
@@ -72,22 +76,29 @@ class ArticleController
 
         $previousArticle = $this->getPreviousArticle();
         $nextArticle = $this->getNextArticle();
-        $articles = $this->getArticles();   
+        $articles = $this->getArticles(); 
+        $currentArticle = $this->retrieveCurrentArticle($_GET['id']); 
 
         require 'View/articles/show.php';
     }
 
-    public function retrieveCurrentArticle()
+    public function retrieveCurrentArticle($articleId = null)
     {
-        $articleId = $_GET['id'];
+        if ($articleId === null) {
+            if (!isset($_GET['id'])) {
+                return null;
+            }
+            $articleId = $_GET['id'];
+        }
+    
         $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author
-                                            FROM articles 
-                                            WHERE id = :id');
+                                          FROM articles 
+                                          WHERE id = :id');
         $statement->bindParam(':id', $articleId);
         $statement->execute();
-
+    
         $dataArticle = $statement->fetch(PDO::FETCH_ASSOC);
-
+    
         if (!$dataArticle) {
             return null;
         }
@@ -100,7 +111,7 @@ class ArticleController
             $dataArticle['author']
         );
     }
-
+    
     public function getPreviousArticle()
     {
         $currentArticleId = $_GET['id'];
@@ -156,5 +167,36 @@ class ArticleController
             $dataArticle['author']
         );
     }
+
+    public function articlesByAuthor()
+    {
+        if (!isset($_GET['author'])) {
+            die("Author not provided in the URL");
+        }
+    
+        $author = $_GET['author'];
+    
+        $statement = $this->bdd->prepare('SELECT id, title, description, publish_date, image_url, author 
+                                          FROM articles 
+                                          WHERE author = :author');
+        $statement->bindParam(':author', $author);
+        $statement->execute();
+        $dataArticles = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+        $articlesByAuthor = [];
+        foreach ($dataArticles as $dataArticle) {
+            $articlesByAuthor[] = new Article(
+                $dataArticle['id'],
+                $dataArticle['title'],
+                $dataArticle['description'],
+                $dataArticle['publish_date'],
+                $dataArticle['image_url'] ?? '',
+                $dataArticle['author']
+            );
+        }
+    
+        require 'View/articles/articles-by-author.php';
+    }
+    
     
 }

@@ -10,6 +10,7 @@ class Article
     public ?string $publishDate;
     public string $imageUrl;
     public string $author;
+    private $bdd;
 
     public function __construct(int $id, string $title, ?string $description, ?string $publishDate, string $imageUrl, string $author)
     {
@@ -19,6 +20,7 @@ class Article
         $this->publishDate = $publishDate;
         $this->imageUrl = $imageUrl ?? '';
         $this->author = $author;
+        $this->bdd = getConnectBdd();
     }
 
     public function formatPublishDate($format = 'D-M-Y')
@@ -30,6 +32,10 @@ class Article
         $dateFormat = $dateTime->format($format);
 
         return $dateFormat;
+    }
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getTitle()
@@ -65,7 +71,9 @@ class Article
 
     public function getUrl()
     {
-        $url = 'index.php?page=articles-show&id=';
+        $url = 'index.php?page=articles-show&id=' . urlencode($this->getId());
+    
         return $url;
     }
+    
 }
