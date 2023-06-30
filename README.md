@@ -35,10 +35,10 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
 <h2 align="left">🚀 Installation</h2>
 
 <br>
+
 1. Clonez ce dépôt de code sur votre machine locale :
 
-<br>
-   
+<br> 
 
 * Clone the project
   ```sh
@@ -60,10 +60,17 @@ Accédez à l'application dans votre navigateur en visitant http://localhost:800
 <h2 align="left">🏗️ Structure du projet</h2>
 <br>
 
-📝 Model : This directory contains the classes and functionalities linked to the application's data and business logic. This includes communication with the database, CRUD (Create, Read, Update, Delete) operations and everything else relating to the data.<br>
-📝 View : This directory contains the application's presentation files. These are generally HTML files, templates or views that define the application's appearance and display data to users.<br>
-📝 Controller : This directory contains the classes which act as intermediaries between the model and the view. Controllers are responsible for receiving user requests, coordinating the necessary model actions and rendering the appropriate view with the corresponding data.<br>
-📝 index.php : This is the application's entry point. It processes the requests, instantiates the controllers and calls the appropriate methods depending on the URL requested.
+📝 Model : <br> 
+>> This directory contains the classes and functionalities linked to the application's data and business logic. <br>This includes communication with the database, CRUD (Create, Read, Update, Delete) operations and everything else relating to the data.<br>
+
+📝 View : <br>
+>> This directory contains the application's presentation files. <br>These are generally HTML files, templates or views that define the application's appearance and display data to users.<br>
+
+📝 Controller : <br>
+>> This directory contains the classes which act as intermediaries between the model and the view. <br>Controllers are responsible for receiving user requests, coordinating the necessary model actions and rendering the appropriate view with the corresponding data.<br>
+
+📝 index.php : <br>
+>> This is the application's entry point. It processes the requests, instantiates the controllers and calls the appropriate methods depending on the URL requested.
 
 
 
@@ -71,11 +78,14 @@ Accédez à l'application dans votre navigateur en visitant http://localhost:800
 <h2 align="left">Screenshot</h2>
 <br>
 
+| <img src="https://raw.githubusercontent.com/DelphineLecorney/mvc/main/public/pictures/articles.JPG" width="150px;"/><br /><sub><b>Articles</b></sub> | <img src="https://raw.githubusercontent.com/DelphineLecorney/mvc/main/public/pictures/ArticleSelected.JPG" width="150px;"/><br /><sub><b>Article selected</b></sub> | <img src="https://raw.githubusercontent.com/DelphineLecorney/mvc/main/public/pictures/nextArticle.JPG" width="150px;"/><br /><sub><b>Previous and next article</b></sub> | <img src="https://raw.githubusercontent.com/DelphineLecorney/mvc/main/public/pictures/moreAuthors.JPG" width="150px;"/><br /><sub><b>More authors</b></sub> |
+| :---: | :---: | :---: | :---: |
 
-| <img src="https://raw.githubusercontent.com/DelphineLecorney/mvc/main/public/pictures/articles.JPG" width="200px;"/><br /><sub><b>Articles</b></sub><br />| <img src="https://raw.githubusercontent.com/DelphineLecorney/mvc/main/public/pictures/ArticleSelected.JPG" width="150px;"/><br /><sub><b>Article selected</b></sub><br /> | <img src="https://raw.githubusercontent.com/DelphineLecorney/mvc/main/public/pictures/nextArticle.JPG" width="150px;"/><br /><sub><b>Previous and next article</b></sub><br /> | <br /><br />| <img src="https://raw.githubusercontent.com/DelphineLecorney/mvc/main/public/pictures/moreAuthors.JPG" width="200px;"/><br /><sub><b>More authors </b></sub><br /> | <img src="" width="150px;"/><br /><sub><b></b></sub><br /> | <img src="" width="100px;"/><br /><sub><b></b></sub><br />
-:-----------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: |
-<br />
+
+
 <br>
+
+
 <h2 align="left">💻 Tech Stack</h2>  
 
 <p align='left'>
